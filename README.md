@@ -2,94 +2,169 @@
 
 [中文说明 / Chinese Version](./README.zh-CN.md)
 
-A lightweight GitHub-friendly demo for visualizing a small-scale version of the `Vicsek + evolutionary game + loner` model used in this project.
+[![Live Demo](https://img.shields.io/badge/GitHub%20Pages-Live%20Demo-1f6b75?style=flat-square)](https://xiaoshuntian.github.io/vicsek-loner-showcase/)
+[![Demo Video](https://img.shields.io/badge/Video-Play%20Demo-cd4d41?style=flat-square)](./assets/Video.mp4)
+[![Model](https://img.shields.io/badge/Model-Vicsek%20%2B%20EGT%20%2B%20Loner-e2a72e?style=flat-square)](./README.md)
 
-The goal is not to replace the MATLAB research code. Instead, this repo gives a compact and interactive explanation of what the agents are actually doing in space:
+A lightweight GitHub-facing interactive demo for visualizing a small-scale version of the `Vicsek + evolutionary game + loner` model used in this project.
+
+This repository is not meant to replace the MATLAB research code. Its job is different: it makes the mechanism visible.
 
 - agents move in a periodic 2D box
-- neighbors are defined by radius `r`
-- cooperators and loners align with the local average heading
+- neighbors are defined by interaction radius `r`
+- cooperators and loners align with local average heading
 - defectors move with random headings
 - strategy updates follow a Fermi imitation rule
-- loners copy with an extra factor `p`
+- loners imitate with an extra factor `p`
 
-The default demo runs `10` agents for `20` rounds so the evolution is easy to inspect visually.
+The default scene runs `10` agents for `20` rounds so the evolution is small enough to inspect, but still rich enough to show how local interactions generate global behavior.
 
-## Quick look
+## Quick Look
 
-You can watch the demo video directly inside this repository page:
+You can watch the demo video directly inside the repository page:
 
 <video src="./assets/Video.mp4" controls preload="metadata" width="900"></video>
 
 If your GitHub client does not render the video inline, open it here: [`assets/Video.mp4`](./assets/Video.mp4)
 
-## Why this repo exists
+## One-Minute Overview
 
-In the MATLAB experiments, we mostly see aggregate outputs such as:
+This project turns an abstract swarm-game model into something you can immediately see:
+
+- who is aligning with neighbors
+- who is moving randomly
+- how strategies spread
+- how global order `Va` and cooperation emerge from local interactions
+
+If you only want the shortest path:
+
+1. open the [live page](https://xiaoshuntian.github.io/vicsek-loner-showcase/)
+2. press `Play`
+3. change `r`, `p`, `alpha`, and `eta`
+4. compare the motion panel with the two time-series charts
+
+## Why This Repo Exists
+
+In the MATLAB experiments, we mainly observe aggregate outputs such as:
 
 - global order parameter `Va`
 - cooperation level
 - strategy frequencies
 
-Those figures are useful, but they do not immediately answer a very natural question:
+Those figures are important, but they do not directly answer a basic question:
 
 `What do the agents actually look like while they evolve?`
 
-This repository is meant to answer that question directly.
+This repository exists to answer that question quickly and visually.
 
-## Mapping to the MATLAB code
+## Live Links
 
-The interactive rules in this demo are intentionally aligned with the current MATLAB implementation in:
+- Repository: `https://github.com/xiaoshuntian/vicsek-loner-showcase`
+- GitHub Pages: `https://xiaoshuntian.github.io/vicsek-loner-showcase/`
+- Demo video file: `./assets/Video.mp4`
+
+## Model Flow
+
+```mermaid
+flowchart LR
+    A["Initialize agents<br/>position, heading, strategy"] --> B["Find neighbors<br/>within radius r"]
+    B --> C["Update headings<br/>C and L align, D randomizes"]
+    C --> D["Move agents<br/>inside periodic box"]
+    D --> E["Compute local Va and payoff"]
+    E --> F["Sample one neighbor"]
+    F --> G["Apply Fermi imitation<br/>loners scaled by p"]
+    G --> H["Update strategy counts,<br/>cooperation, and global Va"]
+```
+
+## Mapping to the MATLAB Code
+
+The browser demo is intentionally aligned with the core rules in:
 
 - `simulation_loner.m`
 - `is_neighbour.m`
 - `neighbour_to_imitate.m`
 
-The simplified browser demo keeps the same logic:
+It preserves the same high-level logic:
 
-1. Position update
+1. Position update  
    Agents move with constant speed `v0` in a periodic square box.
 
-2. Neighbor detection
+2. Neighbor detection  
    Two agents are neighbors when their periodic distance is smaller than `r`.
 
-3. Heading update
-   - `C` and `L` align with the local average heading plus noise `eta`
-   - `D` chooses a random new heading
+3. Heading update  
+   - `C` and `L` align with local average heading plus noise `eta`
+   - `D` selects a random new heading
 
-4. Payoff update
+4. Payoff update  
    - local order `Va_i` is computed from the current neighborhood
-   - cost is proportional to communication radius
+   - communication introduces a cost
    - payoff is `Va_i - alpha * cost`
 
-5. Strategy update
-   Each agent samples one neighbor and imitates under the Fermi rule.
+5. Strategy update  
+   Each agent samples one neighbor and imitates under the Fermi rule.  
    Loners use `p * FermiProb`.
 
-This makes the demo a faithful explanatory visualization, while staying small enough to run instantly in a browser.
+That makes this repository useful for explanation and outreach, while the MATLAB code remains the source of research-grade quantitative results.
 
-## Repo contents
+## What the Page Shows
 
-- `index.html`: single-page demo
-- `styles.css`: page styling
-- `app.js`: simulation, animation, charts, and controls
+The landing page is organized into three parts:
 
-## Live links
+1. A hero section introducing the model and embedding a playable video.
+2. A spatial animation panel showing positions, headings, and interaction radii.
+3. Two chart panels showing strategy frequencies and the time series of global `Va` and cooperation.
 
-- Repository: `https://github.com/xiaoshuntian/vicsek-loner-showcase`
-- Demo video: `./assets/Video.mp4`
-- GitHub Pages: `https://xiaoshuntian.github.io/vicsek-loner-showcase/`
+This layout helps readers connect micro-level motion to macro-level statistics.
 
-## How to use
+## Suggested Parameter Reading
 
-Open `index.html` in a browser.
+For first-time exploration, these parameters are the most informative:
+
+- `r`: controls who can influence whom
+- `p`: controls how easily loners imitate neighbors
+- `alpha`: scales communication cost
+- `eta`: controls directional noise
+
+A simple intuition is:
+
+- larger `r` often strengthens local coupling
+- larger `eta` usually makes alignment harder
+- larger `alpha` makes costly strategies less attractive
+- changing `p` changes how loners re-enter strategic competition
+
+## Project Structure
+
+```text
+vicsek-loner-showcase/
+├─ index.html          # landing page and interface layout
+├─ styles.css          # visual design
+├─ app.js              # simulation rules and drawing logic
+├─ assets/
+│  └─ Video.mp4        # recorded demo
+├─ README.md           # English entry page
+└─ README.zh-CN.md     # Chinese entry page
+```
+
+## Intended Audience
+
+This repository is designed for:
+
+- teammates who want to understand the model before reading MATLAB
+- mentors or reviewers who need a fast visual explanation
+- readers arriving from GitHub or GitHub Pages
+- students who want a compact demo before running larger simulations
+
+## How to Use
+
+Open `index.html` locally, or use the GitHub Pages site.
 
 Controls let you change:
 
 - number of agents
 - number of rounds
 - radius `r`
-- loner imitation factor `p`
+- loner factor `p`
 - relative cost `alpha`
 - noise `eta`
 - speed `v0`
@@ -97,50 +172,30 @@ Controls let you change:
 
 Buttons:
 
-- `Reset`: create a fresh simulation with the current parameters
-- `Play`: animate the run
+- `Reset`: generate a fresh simulation under the current settings
+- `Play`: animate the rollout
 - `Step`: advance one round
-- `Run 20 Rounds`: finish the full rollout immediately
+- `Run 20 Rounds`: finish the rollout immediately
 
-## What the page shows
+## Relationship to the MATLAB Project
 
-The landing page is organized into three parts:
+This repository should be treated as the front door, not the full lab:
 
-1. A hero section that explains the model and now includes a playable demo video.
-2. A spatial animation panel that shows where each agent is, which direction it is moving, and what interaction radius it currently uses.
-3. Two small charts that summarize the evolving strategy frequencies and the time series of global `Va` and cooperation.
+- use this repo to explain the mechanism
+- use the MATLAB project to generate formal results
+- use both together for presentation, onboarding, and discussion
 
-This layout is meant to help new readers understand both the micro-level motion and the macro-level statistics.
+## Future Extensions
 
-## Intended audience
+Good next upgrades include:
 
-This repository is designed for:
-
-- teammates who want to understand the model before reading MATLAB code
-- reviewers or mentors who want a visual explanation of the mechanism
-- readers coming from GitHub or GitHub Pages who need a fast, intuitive introduction
-- students who want a compact demo before running the larger simulations
-
-## Suggested GitHub presentation
-
-For a public-facing repository, the recommended structure is:
-
-1. put this folder in a standalone GitHub repo
-2. enable GitHub Pages
-3. use `index.html` as the landing page
-4. later add screenshots or MATLAB comparison figures if needed
-
-## Future extensions
-
-Good next upgrades:
-
-- add a side-by-side comparison with MATLAB output snapshots
-- export trajectory frames as GIFs
-- add a parameter preset panel matching the paper figures
-- add a second tab for larger `N` and longer runs
-- add direct links to the core MATLAB files and the paper figure they correspond to
+- side-by-side comparison with MATLAB output snapshots
+- parameter presets matching paper figures
+- GIF export for reports or presentations
+- a larger-`N` demonstration mode
+- direct links from the demo to the corresponding MATLAB scripts and paper figures
 
 ## Notes
 
-This demo is designed for explanation and outreach.
-The research-grade quantitative results should still come from the MATLAB codebase.
+This demo is designed for explanation, onboarding, and outreach.  
+The research-grade quantitative results should still come from the MATLAB project.
