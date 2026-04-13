@@ -57,6 +57,32 @@ Those figures are important, but they do not directly answer a basic question:
 
 This repository exists to answer that question quickly and visually.
 
+## Research Background
+
+Collective behavior in autonomous systems is often studied from two complementary perspectives:
+
+- motion coordination: how agents align, cluster, and move as a group
+- strategic adaptation: how agents change behavior under local interaction incentives
+
+The project behind this repository combines those two layers into a single model:
+
+- a Vicsek-style active matter dynamics for motion
+- an evolutionary game mechanism for strategy change
+- a loner option that allows temporary disengagement from costly strategic interaction
+
+This combination is useful because real multi-agent systems rarely face only a motion problem or only a game problem. In practice, they often need to move, coordinate, and adapt behavior at the same time.
+
+## Research Questions
+
+The broader project is motivated by questions such as:
+
+- How does local alignment affect the emergence of cooperation?
+- How do radius, noise, and cost reshape collective order?
+- What role does the loner strategy play in stabilizing or disrupting group behavior?
+- When do local interaction rules create clear macro-level structure in `Va`, cooperation, and strategy frequency?
+
+The visualization in this repository is a small but useful front-end to those questions.
+
 ## Live Links
 
 - Repository: `https://github.com/xiaoshuntian/vicsek-loner-showcase`
@@ -75,6 +101,17 @@ flowchart LR
     F --> G["Apply Fermi imitation<br/>loners scaled by p"]
     G --> H["Update strategy counts,<br/>cooperation, and global Va"]
 ```
+
+## Method Overview
+
+At the project level, the workflow can be summarized like this:
+
+1. define the motion-game parameters
+2. run repeated simulations in MATLAB for larger-scale quantitative experiments
+3. aggregate outputs such as `Va`, cooperation level, convergence time, and final strategy proportions
+4. use this browser demo to make the underlying mechanism legible at the agent level
+
+That means the MATLAB project provides the quantitative evidence, while this repository provides the interpretability layer.
 
 ## Mapping to the MATLAB Code
 
@@ -116,6 +153,21 @@ The landing page is organized into three parts:
 3. Two chart panels showing strategy frequencies and the time series of global `Va` and cooperation.
 
 This layout helps readers connect micro-level motion to macro-level statistics.
+
+## Project Highlights
+
+What makes this repository useful as a research-facing showcase:
+
+- It translates a mathematically defined swarm-game model into an immediately interpretable animation.
+- It connects micro-level spatial behavior with macro-level indicators in the same view.
+- It lowers the barrier for mentors, collaborators, and reviewers who do not want to start from MATLAB source code.
+- It provides a compact demonstration asset for reports, presentations, onboarding, and project pages.
+
+What makes the broader project interesting:
+
+- It studies collective intelligence through the coupling of motion and strategic evolution.
+- It explicitly includes a loner mechanism instead of forcing only cooperate/defect dynamics.
+- It tracks both ordering and strategic composition rather than treating them as separate problems.
 
 ## Suggested Parameter Reading
 
@@ -184,6 +236,16 @@ This repository should be treated as the front door, not the full lab:
 - use this repo to explain the mechanism
 - use the MATLAB project to generate formal results
 - use both together for presentation, onboarding, and discussion
+
+## Repository Role in the Full Research Stack
+
+You can think of the full project in three layers:
+
+- theory layer: Vicsek dynamics, Fermi imitation, loner mechanism
+- experiment layer: MATLAB scripts, sweeps, repeated runs, aggregate metrics
+- communication layer: this repository, the demo video, and the GitHub Pages site
+
+This repository mainly serves the third layer, but it is grounded in the first two.
 
 ## Future Extensions
 
