@@ -64,6 +64,12 @@ This makes the demo a faithful explanatory visualization, while staying small en
 - `styles.css`: page styling
 - `app.js`: simulation, animation, charts, and controls
 
+## Live links
+
+- Repository: `https://github.com/xiaoshuntian/vicsek-loner-showcase`
+- Demo video: `https://github.com/user-attachments/assets/8ae345ca-4342-4f96-88c4-86bcc910cd12`
+- GitHub Pages: after Pages finishes building, the site will be available at `https://xiaoshuntian.github.io/vicsek-loner-showcase/`
+
 ## How to use
 
 Open `index.html` in a browser.
