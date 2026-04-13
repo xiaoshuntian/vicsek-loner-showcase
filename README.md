@@ -1,5 +1,7 @@
 # Vicsek-Loner Showcase
 
+[中文说明 / Chinese Version](./README.zh-CN.md)
+
 A lightweight GitHub-friendly demo for visualizing a small-scale version of the `Vicsek + evolutionary game + loner` model used in this project.
 
 The goal is not to replace the MATLAB research code. Instead, this repo gives a compact and interactive explanation of what the agents are actually doing in space:
@@ -12,6 +14,14 @@ The goal is not to replace the MATLAB research code. Instead, this repo gives a 
 - loners copy with an extra factor `p`
 
 The default demo runs `10` agents for `20` rounds so the evolution is easy to inspect visually.
+
+## Quick look
+
+You can watch the demo video directly inside this repository page:
+
+<video src="./assets/Video.mp4" controls preload="metadata" width="900"></video>
+
+If your GitHub client does not render the video inline, open it here: [`assets/Video.mp4`](./assets/Video.mp4)
 
 ## Why this repo exists
 
@@ -68,7 +78,7 @@ This makes the demo a faithful explanatory visualization, while staying small en
 
 - Repository: `https://github.com/xiaoshuntian/vicsek-loner-showcase`
 - Demo video: `./assets/Video.mp4`
-- GitHub Pages: after Pages finishes building, the site will be available at `https://xiaoshuntian.github.io/vicsek-loner-showcase/`
+- GitHub Pages: `https://xiaoshuntian.github.io/vicsek-loner-showcase/`
 
 ## How to use
 
@@ -92,6 +102,25 @@ Buttons:
 - `Step`: advance one round
 - `Run 20 Rounds`: finish the full rollout immediately
 
+## What the page shows
+
+The landing page is organized into three parts:
+
+1. A hero section that explains the model and now includes a playable demo video.
+2. A spatial animation panel that shows where each agent is, which direction it is moving, and what interaction radius it currently uses.
+3. Two small charts that summarize the evolving strategy frequencies and the time series of global `Va` and cooperation.
+
+This layout is meant to help new readers understand both the micro-level motion and the macro-level statistics.
+
+## Intended audience
+
+This repository is designed for:
+
+- teammates who want to understand the model before reading MATLAB code
+- reviewers or mentors who want a visual explanation of the mechanism
+- readers coming from GitHub or GitHub Pages who need a fast, intuitive introduction
+- students who want a compact demo before running the larger simulations
+
 ## Suggested GitHub presentation
 
 For a public-facing repository, the recommended structure is:
@@ -109,6 +138,7 @@ Good next upgrades:
 - export trajectory frames as GIFs
 - add a parameter preset panel matching the paper figures
 - add a second tab for larger `N` and longer runs
+- add direct links to the core MATLAB files and the paper figure they correspond to
 
 ## Notes
 
