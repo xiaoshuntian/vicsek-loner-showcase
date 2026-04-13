@@ -103,6 +103,20 @@ body {
   align-items: center;
 }
 
+.hero-stack {
+  width: 100%;
+  display: grid;
+  gap: 18px;
+}
+
+.demo-video {
+  width: 100%;
+  display: block;
+  border-radius: 18px;
+  border: 1px solid rgba(31, 42, 51, 0.08);
+  background: #10191d;
+}
+
 .stat-grid {
   width: 100%;
   display: grid;
