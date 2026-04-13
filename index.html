@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vicsek + Loner Showcase</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Vicsek + Evolutionary Game + Loner</p>
+        <h1>See how a small swarm evolves instead of only reading aggregate curves.</h1>
+        <p class="lede">
+          This interactive demo visualizes ten agents moving in a periodic box, updating
+          headings through local alignment, and switching strategies through a Fermi-style
+          imitation rule with loners.
+        </p>
+      </div>
+      <div class="hero-card">
+        <div class="stat-grid">
+          <div>
+            <span class="label">Round</span>
+            <strong id="roundLabel">0 / 20</strong>
+          </div>
+          <div>
+            <span class="label">Global Va</span>
+            <strong id="vaLabel">0.000</strong>
+          </div>
+          <div>
+            <span class="label">Cooperation</span>
+            <strong id="coopLabel">0.000</strong>
+          </div>
+          <div>
+            <span class="label">Seed</span>
+            <strong id="seedLabel">7</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <aside class="controls">
+        <h2>Controls</h2>
+
+        <label>
+          Agents
+          <input id="agentCount" type="number" min="4" max="30" step="1" value="10">
+        </label>
+        <label>
+          Rounds
+          <input id="rounds" type="number" min="5" max="100" step="1" value="20">
+        </label>
+        <label>
+          Radius r
+          <input id="radius" type="number" min="0.08" max="0.8" step="0.01" value="0.28">
+        </label>
+        <label>
+          Loner factor p
+          <input id="pFactor" type="number" min="0" max="1" step="0.05" value="0.50">
+        </label>
+        <label>
+          Relative cost alpha
+          <input id="alpha" type="number" min="0" max="3" step="0.05" value="1.00">
+        </label>
+        <label>
+          Noise eta
+          <input id="eta" type="number" min="0" max="1.57" step="0.01" value="0.35">
+        </label>
+        <label>
+          Speed v0
+          <input id="speed" type="number" min="0.005" max="0.08" step="0.005" value="0.03">
+        </label>
+        <label>
+          Seed
+          <input id="seed" type="number" min="1" max="99999" step="1" value="7">
+        </label>
+
+        <div class="button-row">
+          <button id="resetBtn" type="button">Reset</button>
+          <button id="playBtn" type="button">Play</button>
+          <button id="stepBtn" type="button">Step</button>
+          <button id="runBtn" type="button">Run 20 Rounds</button>
+        </div>
+
+        <div class="legend">
+          <h3>Strategies</h3>
+          <p><span class="swatch coop"></span> C: cooperator, aligns and pays communication cost</p>
+          <p><span class="swatch defect"></span> D: defector, moves with random heading</p>
+          <p><span class="swatch loner"></span> L: loner, aligns but imitates with factor p</p>
+        </div>
+
+        <div class="legend">
+          <h3>Rule summary</h3>
+          <p>Neighbors are radius-based under periodic boundary conditions.</p>
+          <p>C and L follow local average direction plus noise. D randomizes.</p>
+          <p>Payoff is local order minus alpha-scaled communication cost.</p>
+        </div>
+      </aside>
+
+      <section class="board">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Spatial Animation</h2>
+            <p>Dashed circles show each agent's interaction radius.</p>
+          </div>
+          <canvas id="simCanvas" width="760" height="760"></canvas>
+        </div>
+
+        <div class="charts">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Strategy Frequency</h2>
+              <p>How many C, D, and L agents exist at each round.</p>
+            </div>
+            <canvas id="strategyChart" width="760" height="260"></canvas>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Order and Cooperation</h2>
+              <p>Global order parameter Va and cooperation level across time.</p>
+            </div>
+            <canvas id="metricChart" width="760" height="260"></canvas>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
